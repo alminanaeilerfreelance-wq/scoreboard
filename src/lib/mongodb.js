@@ -1,10 +1,12 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB || 'courtcast';
+const uri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL;
+const dbName = process.env.MONGODB_DB || process.env.MONGO_DB || 'courtcast';
 
 if (!uri) {
-  throw new Error('Missing MONGODB_URI in environment. Copy .env.local.example to .env.local and fill it in.');
+  throw new Error(
+    'Missing MongoDB connection string. Add MONGODB_URI (or MONGO_URI / DATABASE_URL) to your environment variables.'
+  );
 }
 
 let client;
